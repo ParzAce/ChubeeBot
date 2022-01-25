@@ -190,6 +190,8 @@ client.on('messageCreate', (msg) => {
     //Chubee pat start
     if (between(1, 100) === 1 && (messageLower === 'need pats!' || messageLower === 'need pats')) {
         msg.reply('No <a:rickroll:881812240100114472><:HappyGun:922702232682627103>')
+    } else if (messageLower.includes('may i get a prayer')) {
+        msg.reply('Our Queen\nWho art in Miyako\nHallowed be thy chubee\nThy Waspeen come\nThy will be done on Arissola as it is in Miyako\n Give us this day our daily pansun\n And forgive us our breedjects\nAs we forgive those who never become perfect\nAnd lead us not into saipats, but deliver us from evil');
     } else if (messageLower === 'need pats!') {
         msg.reply('<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216>' + '\n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n Pats delivered! <:LumaChubee:921287077017055253>');
     } else if (messageLower === 'need pats') {
