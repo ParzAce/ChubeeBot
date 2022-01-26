@@ -19,6 +19,22 @@ function between(min, max) {
     )
   }
 
+//bot tasks when a guild member is updated
+client.on('guildMemberUpdate', (oldMember, newMember) => {
+    //recruit messages when someone is given the recruit role
+    const oldMemberRecruitID = oldMember.roles.cache.some((r) => r.name === 'Recruit');
+    const newMemberRecruitID = newMember.roles.cache.some((r) => r.name === 'Recruit');
+    const genChannel = newMember.guild.channels.cache.find(i => i.name === 'general');
+    if (!oldMemberRecruitID && newMemberRecruitID) {
+        genChannel.send('WELCOME <@' + newMember.user.id + '> to the ~~cult~~ club as a recruit <a:pepesimp:881812231208181790>');
+    }
+});
+
+
+
+
+
+
 
 //bot tasks when someone sends a message
 client.on('messageCreate', (msg) => {
@@ -203,7 +219,7 @@ client.on('messageCreate', (msg) => {
     } else if ((messageLower).includes('pats')) {
         msg.reply('Did someone say pats <a:kek:881812233913520169> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216>' + '\n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216>');
     } else if (messageLower.includes('lord chubee') && messageLower.includes('bless me with my stats') && messageLower.includes('i pray to you')) {
-        msg.reply('your prayer is answered, ' + msg.author.username + " <a:crackingup:881812240435654676>. \nYour current level is " + userStats.level + " \nYour current XP is " + userStats.xp + ", and you need to reach " + xpToNextLevel + " XP to level up");
+        msg.reply('your prayer is answered, ' + msg.author.username + " <a:crackingup:881812240435654676>. \nYour current faith level is " + userStats.level + " \nYour current XP is " + userStats.xp + ", and you need to reach " + xpToNextLevel + " XP to level up");
     }
     //chubee pat ends
   });//end message events
