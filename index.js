@@ -138,12 +138,6 @@ client.on('messageCreate', (msg) => {
         });
     } //end setup roles
 
-    //event handler
-    if (msg.content.startsWith(this.prefix)) {
-        const args = msg.content.slice(this.prefix.length).split(/ +/);
-        const command = args.shift().toLowerCase();
-        console.log(command);
-    }
 
 
 
@@ -185,7 +179,7 @@ client.on('messageCreate', (msg) => {
     //add xp for messages and set last message
     const userStats = guildStats[msg.author.id];
     const xpToNextLevel = 5 * Math.pow(userStats.level, 2) + 50 * userStats.level + 100;
-    if (Date.now() - userStats.last_message > 1) {
+    if (Date.now() - userStats.last_message > 60000) {
         userStats.xp += between(15, 25);
         userStats.last_message = Date.now();
         //setup what xp needs for levels and reseting/setting levels and xp and adding roles for certain levels
@@ -256,6 +250,9 @@ client.on('messageCreate', (msg) => {
         console.log(msg.author.username + ' now has ' + userStats.xp);
         console.log(xpToNextLevel + ' XP needed for next level');
     }
+
+
+
     //Chubee pat start
     if (between(1, 100) === 1 && (messageLower === 'need pats!' || messageLower === 'need pats')) {
         msg.reply('No <a:rickroll:881812240100114472><:HappyGun:922702232682627103>')
