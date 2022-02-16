@@ -196,7 +196,7 @@ client.on('messageCreate', (msg) => {
             if (userStats.level >= 1 && userStats.reached_level_1 === 0) {
                 userStats.reached_level_1 = 1;
                 if (msg.member) msg.member.roles.add(chubee_follower.id);
-                levelUpEmbed.setDescription(msg.author.username + ' has increased their chubee faith level to ' + userStats.level + ' <a:pepesimp:881812231208181790> \n');(msg.author.username + ' is now a chubee follower. Welcome <a:chubee_pat:881808870681481216>');
+                levelUpEmbed.setDescription(msg.author.username + ' is now a chubee follower. Welcome <a:chubee_pat:881808870681481216>');
                 msg.channel.send({ embeds: [levelUpEmbed] });
             } else if (userStats.level >= 5 && userStats.reached_level_5 === 0) {
                 userStats.reached_level_5 = 1;
