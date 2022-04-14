@@ -39,6 +39,11 @@ if (fs.existsSync('stats.json')) {
     stats = jsonfile.readFileSync('stats.json');
 }
 
+var beeBucks = {};
+if (fs.existsSync('beeBucks.json')) {
+    beeBucks = jsonfile.readFileSync('beeBucks.json');
+}
+
 //function for finding a random int in a range
 function between(min, max) {
     return Math.floor(
@@ -159,6 +164,18 @@ client.on('messageCreate', (msg) => {
     if (msg.guild.id in stats === false) {
         stats[msg.guild.id] = {};
     }
+    if (msg.guild.id in beeBucks === false) {
+    beeBucks[msg.guild.id] = {};
+    }
+    //set base bee bucks for user
+    const guildbucks = beeBucks[msg.guild.id];
+    if (msg.author.id in guildbucks === false) {
+        guildbucks[msg.author.id] = {
+            Bee_Bucks: 0
+        };
+
+        jsonfile.writeFileSync('beeBucks.json', beeBucks);
+    }
     //set base stats for user
     const guildStats = stats[msg.guild.id];
     if (msg.author.id in guildStats === false) {
@@ -178,6 +195,7 @@ client.on('messageCreate', (msg) => {
     }
     //add xp for messages and set last message
     const userStats = guildStats[msg.author.id];
+    const userBucks = guildbucks[msg.author.id];
     const xpToNextLevel = 5 * Math.pow(userStats.level, 2) + 50 * userStats.level + 100;
     if (Date.now() - userStats.last_message > 60000) {
         userStats.xp += between(15, 25);
@@ -249,6 +267,7 @@ client.on('messageCreate', (msg) => {
         //log every message xp up and level to xp
         console.log(msg.author.username + ' now has ' + userStats.xp);
         console.log(xpToNextLevel + ' XP needed for next level');
+        console.log(userBucks.Bee_Bucks + ' Bee bucks for user ' + msg.author.username);
     }
 
 
@@ -272,6 +291,9 @@ client.on('messageCreate', (msg) => {
         msg.reply('your prayer is answered, ' + msg.author.username + " <a:crackingup:881812240435654676>. \nYour current faith level is " + userStats.level + " \nYour current XP is " + userStats.xp + ", and you need to reach " + xpToNextLevel + " XP to level up");
     }
     //chubee pat ends
+
+    console.log(userBucks.Bee_Bucks);
+
   });//end message events
 
 //welcome message 

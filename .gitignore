@@ -1,4 +1,5 @@
 .env
 stats.json
+beeBucks.json
 package-lock.json
 node_modules/
