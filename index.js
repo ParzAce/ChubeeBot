@@ -199,6 +199,7 @@ client.on('messageCreate', (msg) => {
     const xpToNextLevel = 5 * Math.pow(userStats.level, 2) + 50 * userStats.level + 100;
     if (Date.now() - userStats.last_message > 60000) {
         userStats.xp += between(15, 25);
+        //userStats.xp += 1000;
         userStats.last_message = Date.now();
         //setup what xp needs for levels and reseting/setting levels and xp and adding roles for certain levels
         if (userStats.xp >= xpToNextLevel) {
@@ -208,7 +209,7 @@ client.on('messageCreate', (msg) => {
             .setColor('#304281').setTitle('Level Up!')
             .setURL('https://www.youtube.com/channel/UCVpvUT4E0PLG4v5cgoGPG-A')
             .setDescription(msg.author.username + ' has increased their chubee faith level to ' + userStats.level + ' <a:pepesimp:881812231208181790> \n')
-            .setThumbnail('./Images/ChubeeBless.jpg');
+            .setThumbnail('https://i.imgur.com/mCnedBW.jpg');
             msg.channel.send({ embeds: [levelUpEmbed] });
             //levelUpEmbed.setDescription(msg.author.username + ' has increased their chubee faith level to ' + userStats.level + ' <a:pepesimp:881812231208181790> \n');
             if (userStats.level >= 1 && userStats.reached_level_1 === 0) {
@@ -288,7 +289,15 @@ client.on('messageCreate', (msg) => {
     } else if ((messageLower).includes('pats')) {
         msg.reply('Did someone say pats <a:kek:881812233913520169> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216>' + '\n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216>');
     } else if (messageLower.includes('lord chubee') && messageLower.includes('bless me with my stats') && messageLower.includes('i pray to you')) {
-        msg.reply('your prayer is answered, ' + msg.author.username + " <a:crackingup:881812240435654676>. \nYour current faith level is " + userStats.level + " \nYour current XP is " + userStats.xp + ", and you need to reach " + xpToNextLevel + " XP to level up");
+        const levelsEmbed = new Discord.MessageEmbed()
+            .setColor('#304281')
+            .setTitle('Level Up!')
+            .setDescription('Your prayer has been answered')
+            .setThumbnail('https://i.imgur.com/mCnedBW.jpg')
+            .addField('Level', '' + userStats.level, true)
+            .addField('Current XP', '' + userStats.xp, true)
+            .addField('XP needed for next level', '' + xpToNextLevel, true);
+        msg.reply({ embeds: [levelsEmbed] });
     }
     //chubee pat ends
 
