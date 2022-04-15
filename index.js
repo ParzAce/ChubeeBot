@@ -5,6 +5,7 @@ const jsonfile = require('jsonfile');
 const fs = require('fs');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
 const generateImage = require('./generateImage');
+const { Random } = require('random');
 
 
 
@@ -171,11 +172,13 @@ client.on('messageCreate', (msg) => {
     const guildbucks = beeBucks[msg.guild.id];
     if (msg.author.id in guildbucks === false) {
         guildbucks[msg.author.id] = {
-            Bee_Bucks: 0
+            Bee_Bucks: 0,
+            last_message: 0
         };
 
         jsonfile.writeFileSync('beeBucks.json', beeBucks);
     }
+
     //set base stats for user
     const guildStats = stats[msg.guild.id];
     if (msg.author.id in guildStats === false) {
@@ -193,10 +196,15 @@ client.on('messageCreate', (msg) => {
             reached_level_50: 0,
         };
     }
-    //add xp for messages and set last message
+    //add xp for messages and set last message and for bee bucks
     const userStats = guildStats[msg.author.id];
     const userBucks = guildbucks[msg.author.id];
     const xpToNextLevel = 5 * Math.pow(userStats.level, 2) + 50 * userStats.level + 100;
+    if (Date.now() - userBucks.last_message > 43200000) {
+        userBucks.last_message = Date.now()
+        userBucks.Bee_Bucks += 10;
+        jsonfile.writeFileSync('beeBucks.json', beeBucks);
+    }
     if (Date.now() - userStats.last_message > 60000) {
         userStats.xp += between(15, 25);
         //userStats.xp += 1000;
@@ -205,11 +213,15 @@ client.on('messageCreate', (msg) => {
         if (userStats.xp >= xpToNextLevel) {
             userStats.level++;
             userStats.xp = userStats.xp - xpToNextLevel;
+            buckGain = userStats.level * 25;
+            userBucks.Bee_Bucks += buckGain;
+            jsonfile.writeFileSync('beeBucks.json', beeBucks);
             const levelUpEmbed = new Discord.MessageEmbed()
             .setColor('#304281').setTitle('Level Up!')
             .setURL('https://www.youtube.com/channel/UCVpvUT4E0PLG4v5cgoGPG-A')
             .setDescription(msg.author.username + ' has increased their chubee faith level to ' + userStats.level + ' <a:pepesimp:881812231208181790> \n')
-            .setThumbnail('https://i.imgur.com/mCnedBW.jpg');
+            .setThumbnail('https://i.imgur.com/mCnedBW.jpg')
+            .addField('Bee Bucks Gained', '' + buckGain);
             msg.channel.send({ embeds: [levelUpEmbed] });
             //levelUpEmbed.setDescription(msg.author.username + ' has increased their chubee faith level to ' + userStats.level + ' <a:pepesimp:881812231208181790> \n');
             if (userStats.level >= 1 && userStats.reached_level_1 === 0) {
@@ -273,10 +285,8 @@ client.on('messageCreate', (msg) => {
 
 
 
-    //Chubee pat start
-    if (between(1, 100) === 1 && (messageLower === 'need pats!' || messageLower === 'need pats')) {
-        msg.reply('No <a:rickroll:881812240100114472><:HappyGun:922702232682627103>')
-    } else if (messageLower.includes('may i get a prayer')) {
+    //Chubee text start
+    if (messageLower.includes('may i get a prayer')) {
         msg.reply('Our Queen\nWho art in Miyako\nHallowed be thy chubee\nThy Waspeen come\nThy will be done on Arissola as it is in Miyako\n Give us this day our daily pansun\n And forgive us our breedjects\nAs we forgive those who never become perfect\nAnd lead us not into saipats, but deliver us from evil');
     } else if (messageLower === 'need pats!') {
         msg.reply('<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216>' + '\n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n Pats delivered! <:LumaChubee:921287077017055253>');
@@ -287,16 +297,55 @@ client.on('messageCreate', (msg) => {
     } else if ((messageLower).includes('spats')) {
         msg.reply('Are you spitting on me?');
     } else if ((messageLower).includes('pats')) {
-        msg.reply('Did someone say pats <a:kek:881812233913520169> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216>' + '\n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216>');
+
+        var hasLuma = 0;
+        var lumaCount = 0;
+        var lumaOdds = [];
+        for (i = 0; i < 16; i++) {
+            const odds = between(0, 3000);
+            if (odds === 5) {
+                lumaOdds[i] = '<a:lumaChubeePat:964325660803858452>';
+                hasLuma = 1;
+                lumaCount++;
+            } else {
+                lumaOdds[i] = '<a:chubee_pat:881808870681481216>';
+            }
+        }
+
+
+        msg.reply('Did someone say pats <:kekw:950132782737268807> \n'+ 
+        lumaOdds[0] + lumaOdds[1] + lumaOdds[2] + lumaOdds[3] + 
+        '\n' + lumaOdds[12] + lumaOdds[13] + lumaOdds[14] + lumaOdds[15] + 
+        '\n' + lumaOdds[4] + lumaOdds[5] + lumaOdds[6] + lumaOdds[7] + 
+        '\n' + lumaOdds[8] + lumaOdds[9] + lumaOdds[10] + lumaOdds[11]);
+
+        if (hasLuma === 1) {
+            if (lumaCount === 1) {
+                msg.reply("Wow <a:ExcuseMe:922704264764207134>, You found a luma <a:lumaChubeePat:964325660803858452>! \n\n\n" 
+                + "Here's 100 Bee Bucks for your accomplishment");
+                userBucks.Bee_Bucks += 100;
+            } else {
+                msg.reply("Wow <a:ExcuseMe:922704264764207134>, You found " + lumaCount + " luma <a:lumaChubeePat:964325660803858452>! \n\n\n" 
+                + "Here's " + (100 * lumaCount) + " Bee Bucks for your accomplishment");
+                userBucks.Bee_Bucks += (100 * lumaCount);
+            }
+
+            jsonfile.writeFileSync('beeBucks.json', beeBucks);
+
+        }
+
+
     } else if (messageLower.includes('lord chubee') && messageLower.includes('bless me with my stats') && messageLower.includes('i pray to you')) {
         const levelsEmbed = new Discord.MessageEmbed()
             .setColor('#304281')
-            .setTitle('Level Up!')
+            .setTitle(msg.author.username + ' Player Stats')
             .setDescription('Your prayer has been answered')
             .setThumbnail('https://i.imgur.com/mCnedBW.jpg')
             .addField('Level', '' + userStats.level, true)
             .addField('Current XP', '' + userStats.xp, true)
-            .addField('XP needed for next level', '' + xpToNextLevel, true);
+            .addField('XP needed for next level', '' + xpToNextLevel, true)
+            .addField('\u200B', '\u200B')
+            .addField('Bee bucks', '' + userBucks.Bee_Bucks, true);
         msg.reply({ embeds: [levelsEmbed] });
     }
     //chubee pat ends
