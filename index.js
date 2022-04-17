@@ -228,48 +228,56 @@ client.on('messageCreate', (msg) => {
                 userStats.reached_level_1 = 1;
                 if (msg.member) msg.member.roles.add(chubee_follower.id);
                 levelUpEmbed.setDescription(msg.author.username + ' is now a chubee follower. Welcome <a:chubee_pat:881808870681481216>');
+                embed.fields = [];
                 msg.channel.send({ embeds: [levelUpEmbed] });
             } else if (userStats.level >= 5 && userStats.reached_level_5 === 0) {
                 userStats.reached_level_5 = 1;
                 if (msg.member) msg.member.roles.remove(chubee_follower.id);
                 if (msg.member) msg.member.roles.add(chubee_disciple.id);
                 levelUpEmbed.setDescription(msg.author.username + ' has been initiated as an official chubee disciple <:FlushingSoBad:922700411838808104>');
+                embed.fields = [];
                 msg.channel.send({ embeds: [levelUpEmbed] });
             } else if (userStats.level >= 10 && userStats.reached_level_10 === 0) {
                 userStats.reached_level_10 = 1;
                 if (msg.member) msg.member.roles.remove(chubee_disciple.id);
                 if (msg.member) msg.member.roles.add(chubee_priest.id);
                 levelUpEmbed.setDescription(msg.author.username + ' has promoted to a chubee priest <a:Poooooog:922704264164429884>');
+                embed.fields = [];
                 msg.channel.send({ embeds: [levelUpEmbed] });
             } else if (userStats.level >= 15 && userStats.reached_level_15 === 0) {
                 userStats.reached_level_15 = 1;
                 if (msg.member) msg.member.roles.remove(chubee_priest.id);
                 if (msg.member) msg.member.roles.add(chubee_lector.id);
                 levelUpEmbed.setDescription(msg.author.username + ' has been risen to the rank of chubee lector <a:dance:881812239856832512>');
+                embed.fields = [];
                 msg.channel.send({ embeds: [levelUpEmbed] });
             } else if (userStats.level >= 20 && userStats.reached_level_20 === 0) {
                 userStats.reached_level_20 = 1;
                 if (msg.member) msg.member.roles.remove(chubee_lector.id);
                 if (msg.member) msg.member.roles.add(chubee_warrior_priest.id);
                 levelUpEmbed.setDescription(msg.author.username + ' has been endorsed to become a chubee warrior priest <a:PeppeHype:922704263568834581>');
+                embed.fields = [];
                 msg.channel.send({ embeds: [levelUpEmbed] });
             } else if (userStats.level >= 25 && userStats.reached_level_25 === 0) {
                 userStats.reached_level_25 = 1;
                 if (msg.member) msg.member.roles.remove(chubee_warrior_priest.id);
                 if (msg.member) msg.member.roles.add(chubee_holy_vocation.id);
                 levelUpEmbed.setDescription(msg.author.username + ' has upheld their reputation to become a chubee holy vocation <:PogBee:927483798688514048>');
+                embed.fields = [];
                 msg.channel.send({ embeds: [levelUpEmbed] });
             } else if (userStats.level >= 30 && userStats.reached_level_30 === 0) {
                 userStats.reached_level_30 = 1;
                 if (msg.member) msg.member.roles.remove(chubee_holy_vocation.id);
                 if (msg.member) msg.member.roles.add(chubee_arch_lector.id);
                 levelUpEmbed.setDescription(msg.author.username + ' has shown immense dedication and is now a chubee arch lector <a:crackingup:881812240435654676>');
+                embed.fields = [];
                 msg.channel.send({ embeds: [levelUpEmbed] });
             } else if (userStats.level >= 50 && userStats.reached_level_50 === 0) {
                 userStats.reached_level_50 = 1;
                 if (msg.member) msg.member.roles.remove(chubee_arch_lector.id);
                 if (msg.member) msg.member.roles.add(chubee_high_priest.id);
                 levelUpEmbed.setDescription(msg.author.username + ' has championed their faith to the highest rank, a chubee high priest <a:ExcuseMe:922704264764207134>');
+                embed.fields = [];
                 msg.channel.send({ embeds: [levelUpEmbed] });
             }
         }
@@ -288,6 +296,8 @@ client.on('messageCreate', (msg) => {
     //Chubee text start
     if (messageLower.includes('may i get a prayer')) {
         msg.reply('Our Queen\nWho art in Miyako\nHallowed be thy chubee\nThy Waspeen come\nThy will be done on Arissola as it is in Miyako\n Give us this day our daily pansun\n And forgive us our breedjects\nAs we forgive those who never become perfect\nAnd lead us not into saipats, but deliver us from evil');
+    } else if (messageLower === '!invest') {
+        
     } else if (messageLower === 'need pats!') {
         msg.reply('<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216>' + '\n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n Pats delivered! <:LumaChubee:921287077017055253>');
     } else if (messageLower === 'need pats') {
