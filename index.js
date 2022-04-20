@@ -13,7 +13,7 @@ const { Random } = require('random');
 //command handler
 let bot = {
     client,
-    prefix: '!',
+    prefix: '^',
     owners: ['173216366847852544']
 }
 
@@ -74,78 +74,6 @@ client.on('messageCreate', (msg) => {
     if (msg.author.id == client.user.id){
         return;
     }
-
-    //if (msg.author.id == '186972544832765952') {
-        //msg.delete();
-    //}
-
-    //set up roles for level system
-    if (!msg.guild.roles.cache.find((r) => r.name === 'Chubee Follower')) {
-        msg.guild.roles.create({
-                name:'Chubee Follower',
-                color: 'GREY',
-                reason: 'Set the role initially if it isnt already in the server',
-        });
-    }
-
-    if (!msg.guild.roles.cache.find((r) => r.name === 'Chubee Disciple')) {
-        msg.guild.roles.create({
-                name:'Chubee Disciple',
-                color: 'DARK_GREEN',
-                reason: 'Set the role initially if it isnt already in the server',
-        });
-    }
-
-    if (!msg.guild.roles.cache.find((r) => r.name === 'Chubee Priest')) {
-        msg.guild.roles.create({
-                name:'Chubee Priest',
-                color: 'GREEN',
-                reason: 'Set the role initially if it isnt already in the server',
-        });
-    }
-
-    if (!msg.guild.roles.cache.find((r) => r.name === 'Chubee Lector')) {
-        msg.guild.roles.create({
-                name:'Chubee Lector',
-                color: 'GOLD',
-                reason: 'Set the role initially if it isnt already in the server',
-        });
-    }
-
-    if (!msg.guild.roles.cache.find((r) => r.name === 'Chubee Warrior Priest')) {
-        msg.guild.roles.create({
-                name:'Chubee Warrior Priest',
-                color: 'DARK_ORANGE',
-                reason: 'Set the role initially if it isnt already in the server',
-        });
-    }
-
-    if (!msg.guild.roles.cache.find((r) => r.name === 'Chubee Holy Vocation')) {
-        msg.guild.roles.create({
-                name:'Chubee Holy Vocation',
-                color: 'ORANGE',
-                reason: 'Set the role initially if it isnt already in the server',
-        });
-    }
-
-    if (!msg.guild.roles.cache.find((r) => r.name === 'Chubee Arch Lector')) {
-        msg.guild.roles.create({
-                name:'Chubee Arch Lector',
-                color: 'DARK_PURPLE',
-                reason: 'Set the role initially if it isnt already in the server',
-        });
-    }
-
-    if (!msg.guild.roles.cache.find((r) => r.name === 'Chubee High Priest')) {
-        msg.guild.roles.create({
-                name:'Chubee High Priest',
-                color: 'DARK_VIVID_PINK',
-                reason: 'Set the role initially if it isnt already in the server',
-        });
-    } //end setup roles
-
-
-
 
 
 
@@ -291,6 +219,8 @@ client.on('messageCreate', (msg) => {
         console.log(userBucks.Bee_Bucks + ' Bee bucks for user ' + msg.author.username);
     }
 
+
+    //command handler
 
 
     //Chubee text start
