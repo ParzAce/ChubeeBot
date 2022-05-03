@@ -80,7 +80,7 @@ const dojoTimes = (message) => {
     var arburyDT = year + "-" + month + "-" + arburyDay + " " + 4 + ":" + "00" + ":" + "00";
 
 
-    //find unix for each island
+    //get unix for each island
     const deniz = moment(denizDT, 'YYYY-MM-DD HH:mm:ss').unix()
     const omni = moment(omniDT, 'YYYY-MM-DD HH:mm:ss').unix()
     const tucma = moment(tucmaDT, 'YYYY-MM-DD HH:mm:ss').unix()
@@ -88,7 +88,7 @@ const dojoTimes = (message) => {
     const cipanku = moment(cipankuDT, 'YYYY-MM-DD HH:mm:ss').unix()
     const arbury = moment(arburyDT, 'YYYY-MM-DD HH:mm:ss').unix()
 
-
+    //create embed to send
     const dojoEmbed = new Discord.MessageEmbed()
             .setColor('#304281').setTitle('Dojo War Times')
             .setThumbnail('https://i.imgur.com/mCnedBW.jpg')
