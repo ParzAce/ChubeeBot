@@ -4,7 +4,8 @@ require("dotenv").config();
 const jsonfile = require('jsonfile');
 const fs = require('fs');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
-const generateImage = require('./generateImage');
+const generateImage = require('./generateImage.js');
+const commandHandler = require('./util/commands.js');
 const { Random } = require('random');
 
 
@@ -73,6 +74,11 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
 client.on('messageCreate', (msg) => {
     if (msg.author.id == client.user.id){
         return;
+    } 
+    
+    if (msg.content.substring(0, 1) == "^") {
+        commandHandler(msg, bot)
+        return
     }
 
 
@@ -162,7 +168,7 @@ client.on('messageCreate', (msg) => {
                 userStats.reached_level_5 = 1;
                 if (msg.member) msg.member.roles.remove(chubee_follower.id);
                 if (msg.member) msg.member.roles.add(chubee_disciple.id);
-                levelUpEmbed.setDescription(msg.author.username + ' has been initiated as an official chubee disciple <:FlushingSoBad:922700411838808104>');
+                levelUpEmbed.setDescription(msg.author.username + ' has been initiated as an official chubee disciple <:cursedpog1:968942514117677116>');
                 levelUpEmbed.fields = [];
                 msg.channel.send({ embeds: [levelUpEmbed] });
             } else if (userStats.level >= 10 && userStats.reached_level_10 === 0) {
