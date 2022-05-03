@@ -29,7 +29,6 @@ const commandHandler = (command, bot) => {
 
 const dojoTimes = (message) => {
 
-    console.log("2");
 
     //find current time and then put it in the YYYY-MM-DD HH:mm:ss format
    
