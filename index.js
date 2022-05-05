@@ -6,7 +6,6 @@ const fs = require('fs');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
 const generateImage = require('./generateImage.js');
 const commandHandler = require('./util/commands.js');
-const { Random } = require('random');
 
 
 
@@ -74,7 +73,7 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
 client.on('messageCreate', (msg) => {
     if (msg.author.id == client.user.id){
         return;
-    } 
+    }
     
     if (msg.content.substring(0, 1) == "^") {
         commandHandler(msg, bot)
@@ -203,7 +202,7 @@ client.on('messageCreate', (msg) => {
                 userStats.reached_level_30 = 1;
                 if (msg.member) msg.member.roles.remove(chubee_holy_vocation.id);
                 if (msg.member) msg.member.roles.add(chubee_arch_lector.id);
-                levelUpEmbed.setDescription(msg.author.username + ' has shown immense dedication and is now a chubee arch lector <a:crackingup:881812240435654676>');
+                levelUpEmbed.setDescription(msg.author.username + ' has shown immense dedication and is now a chubee arch lector <:SHEEESH:950132785144815646>');
                 levelUpEmbed.fields = [];
                 msg.channel.send({ embeds: [levelUpEmbed] });
             } else if (userStats.level >= 50 && userStats.reached_level_50 === 0) {
@@ -231,24 +230,19 @@ client.on('messageCreate', (msg) => {
 
     //Chubee text start
     if (messageLower.includes('may i get a prayer')) {
-        msg.reply('Our Queen\nWho art in Miyako\nHallowed be thy chubee\nThy Waspeen come\nThy will be done on Arissola as it is in Miyako\n Give us this day our daily pansun\n And forgive us our breedjects\nAs we forgive those who never become perfect\nAnd lead us not into saipats, but deliver us from evil');
-    } else if (messageLower === '!invest') {
-        
-    } else if (messageLower === 'need pats!') {
-        msg.reply('<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216>' + '\n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n Pats delivered! <:LumaChubee:921287077017055253>');
-    } else if (messageLower === 'need pats') {
-        msg.reply('<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216>' + '\n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n<a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216><a:chubee_pat:881808870681481216> \n Pats delivered! <:LumaChubee:921287077017055253>');
+        msg.reply('Our Queen\nWho art in Miyako\nHallowed be thy chubee\nThy Waspeen come\nThy will be done on Arissola as it is in Miyako\n Give us this day our daily pansun\n And forgive us our breedjects\nAs we forgive those who never become perfect\nAnd lead us not into saipats, but deliver us from evil');   
     } else if ((messageLower).includes('saipats') || (messageLower).includes('saipat')){
         msg.reply("Saipat will never amount to anything <a:PeppoHammer:922703155542782002> just like you if you keep typing that dreaded name in this server <:HappyGun:922702232682627103>");
-    } else if ((messageLower).includes('spats')) {
+    } else if ((messageLower).includes('spats') || (messageLower).includes('spat')) {
         msg.reply('Are you spitting on me?');
+        msg.react("<:pepehatescams:968943304886591518>")
     } else if ((messageLower).includes('pats')) {
 
         var hasLuma = 0;
         var lumaCount = 0;
         var lumaOdds = [];
         for (i = 0; i < 16; i++) {
-            const odds = between(0, 3000);
+            const odds = between(0, 2000);
             if (odds === 5) {
                 lumaOdds[i] = '<a:lumaChubeePat:964325660803858452>';
                 hasLuma = 1;
