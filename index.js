@@ -48,7 +48,7 @@ if (fs.existsSync('beeBucks.json')) {
 //function for finding a random int in a range
 function between(min, max) {
     return Math.floor(
-      Math.random() * (max - min) + min
+      Math.random() * (max - min + 1) + min
     )
   }
 
@@ -71,15 +71,21 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
 
 //bot tasks when someone sends a message
 client.on('messageCreate', (msg) => {
+    const rentalChannel = msg.member.guild.channels.cache.find(i => i.name === 'club-rental-requests');
     if (msg.author.id == client.user.id){
         return;
     }
     
-    if (msg.content.substring(0, 1) == "^") {
-        commandHandler(msg, bot)
+    if (msg.content.substring(0, 1) === '^') {
+        commandHandler(msg)
         return
     }
 
+    if (msg.channel.id === rentalChannel.id) {
+        msg.delete()
+        msg.author.send("*Bzzzzt*\n\n\nThis channel is for rental requests only <a:lumaChubeePat:964325660803858452>\n\n\n*Bzzzzt*")
+        return
+    }
 
 
     //get role IDs to set roles for the level system
@@ -242,7 +248,7 @@ client.on('messageCreate', (msg) => {
         var lumaCount = 0;
         var lumaOdds = [];
         for (i = 0; i < 16; i++) {
-            const odds = between(0, 2000);
+            const odds = between(1, 1500);
             if (odds === 5) {
                 lumaOdds[i] = '<a:lumaChubeePat:964325660803858452>';
                 hasLuma = 1;

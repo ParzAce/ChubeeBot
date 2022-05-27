@@ -1,16 +1,17 @@
 var moment = require('moment');
 const Discord = require("discord.js");
 
-const commandArrays = ["dojotimes"]
-const commandCounter = 1;
+const commandArrays = ["dojotimes", "rental"]
+const commandCounter = 2;
 
-const commandHandler = (command, bot) => {
+const commandHandler = (command) => {
     var commandBool = false
     var commandDet = 0
     const nudeCommand = command.content.substring(1)
     const nudeCommands = nudeCommand.split(" ")
+    const rentalChannel = command.member.guild.channels.cache.find(i => i.name === 'club-rental-requests');
     for (i = 0; i < commandCounter; i++) {
-        if (nudeCommands[0] == commandArrays[i]) {
+        if (nudeCommands[0] === commandArrays[i]) {
             commandDet = i
             commandBool = true
         }
@@ -20,10 +21,41 @@ const commandHandler = (command, bot) => {
         return
     } else if (commandDet === 0 && nudeCommands.length === 1) {
         dojoTimes(command)
+    } else if (commandDet === 1 && nudeCommands.length === 2) {
+        if (command.channel.id === rentalChannel.id) {
+            rental(command, nudeCommands)
+        } else {
+            return
+        }
     }
 
 
 
+}
+
+const rental = (message, commandString) => {
+    const user = message.author.username
+    const inboundChannel = message.member.guild.channels.cache.find(i => i.name === 'rental-inbound');
+    message.delete()
+    if (commandString[1] === "radar") {
+        message.author.send("*Bzzzzt*\n\n\nWe have recieved your request! \n\nSomeone will be reaching out to you shortly <a:lumaChubeePat:964325660803858452>\n\n\n*Bzzzzt*")
+        inboundChannel.send({
+            content: user + " has requested a radar package\n\n\n Please react with a checkmark if you want to take the request"
+            });
+    } else if (commandString[1] === "full") {
+        console.log("message")
+        message.author.send("*Bzzzzt*\n\n\nWe have recieved your request! \n\nSomeone will be reaching out to you shortly <a:lumaChubeePat:964325660803858452>\n\n\n*Bzzzzt*")
+        inboundChannel.send({
+            content: user + " has requested a full package\n\n\n Please react with a checkmark if you want to take the request"
+            });
+    } else if (commandString[1] === "plain") {
+        message.author.send("*Bzzzzt*\n\n\nWe have recieved your request! \n\nSomeone will be reaching out to you shortly <a:lumaChubeePat:964325660803858452>\n\n\n*Bzzzzt*")
+        inboundChannel.send({
+            content: user + " has requested a plain package\n\n\n Please react with a checkmark once the rental team has been rented out"
+            });
+    } else {
+        return
+    }
 }
 
 
