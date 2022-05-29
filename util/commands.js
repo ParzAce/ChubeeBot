@@ -1,15 +1,15 @@
 var moment = require('moment');
 const Discord = require("discord.js");
 
-const commandArrays = ["dojotimes", "rental"]
-const commandCounter = 2;
+const commandArrays = ["dojotimes", "rental", "leveling"]
+const commandCounter = 3;
 
 const commandHandler = (command) => {
     var commandBool = false
     var commandDet = 0
     const nudeCommand = command.content.substring(1)
     const nudeCommands = nudeCommand.split(" ")
-    const rentalChannel = command.member.guild.channels.cache.find(i => i.name === 'club-rental-requests');
+    const rentalChannel = command.member.guild.channels.cache.find(i => i.name === 'club-services');
     for (i = 0; i < commandCounter; i++) {
         if (nudeCommands[0] === commandArrays[i]) {
             commandDet = i
@@ -27,15 +27,39 @@ const commandHandler = (command) => {
         } else {
             return
         }
+    } else if (commandDet === 2 && nudeCommands.length === 3) {
+        if (command.channel.id === rentalChannel.id) {
+            leveling(command, nudeCommands)
+        } else {
+            return
+        }
     }
+}
 
 
-
+const leveling = (message, commandString) => {
+    const user = message.author.username
+    const inboundChannel = message.member.guild.channels.cache.find(i => i.name === 'services-inbound');
+    message.delete()
+    if (commandString[1] === "normal" && commandString[2] > 0 && commandString[2] < 9) {
+        message.author.send("*Bzzzzt*\n\n\nWe have recieved your request! \n\nSomeone will be reaching out to you shortly <a:lumaChubeePat:964325660803858452>\n\n\n*Bzzzzt*")
+        inboundChannel.send({
+            content: user + " has requested a normal leveling package for " + commandString[2] + " Tems\n\n\n Please react with a checkmark if you want to take the request"
+            });
+    } else if (commandString[1] === "rush" && commandString[2] > 0 && commandString[2] < 5) {
+        message.author.send("*Bzzzzt*\n\n\nWe have recieved your request! \n\nSomeone will be reaching out to you shortly <a:lumaChubeePat:964325660803858452>\n\n\n*Bzzzzt*")
+        inboundChannel.send({
+            content: user + " has requested a rush leveling package for " + commandString[2] + " Tems\n\n\n Please react with a checkmark if you want to take the request"
+            });
+    } else {
+        message.author.send("*Bzzzzt*\n\n\nYou might have entered the command in wrong<a:lumaChubeePat:964325660803858452>\n\n\n*Bzzzzt*")
+        return
+    }
 }
 
 const rental = (message, commandString) => {
     const user = message.author.username
-    const inboundChannel = message.member.guild.channels.cache.find(i => i.name === 'rental-inbound');
+    const inboundChannel = message.member.guild.channels.cache.find(i => i.name === 'services-inbound');
     message.delete()
     if (commandString[1] === "radar") {
         message.author.send("*Bzzzzt*\n\n\nWe have recieved your request! \n\nSomeone will be reaching out to you shortly <a:lumaChubeePat:964325660803858452>\n\n\n*Bzzzzt*")
@@ -54,6 +78,7 @@ const rental = (message, commandString) => {
             content: user + " has requested a plain package\n\n\n Please react with a checkmark once the rental team has been rented out"
             });
     } else {
+        message.author.send("*Bzzzzt*\n\n\nYou might have entered the command in wrong<a:lumaChubeePat:964325660803858452>\n\n\n*Bzzzzt*")
         return
     }
 }
