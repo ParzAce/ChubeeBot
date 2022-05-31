@@ -71,7 +71,7 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
 
 //bot tasks when someone sends a message
 client.on('messageCreate', (msg) => {
-    const rentalChannel = msg.member.guild.channels.cache.find(i => i.name === 'club-rental-requests');
+    const rentalChannel = msg.member.guild.channels.cache.find(i => i.name === 'club-services');
     if (msg.author.id == client.user.id){
         return;
     }
