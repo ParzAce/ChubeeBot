@@ -9,7 +9,6 @@
   "author": "Parz ace",
   "license": "ISC",
   "dependencies": {
-    "@maael/temtem-types": "^1.0.2",
     "axios": "^0.25.0",
     "canvas": "^2.9.0",
     "discord.js": "^13.6.0",

@@ -1,8 +1,8 @@
 var moment = require('moment');
 const Discord = require("discord.js");
 
-const commandArrays = ["dojotimes", "rental", "leveling"]
-const commandCounter = 3;
+const commandArrays = ["dojotimes", "rental", "leveling", "vault"]
+const commandCounter = 4;
 
 const commandHandler = (command) => {
     var commandBool = false
@@ -33,9 +33,29 @@ const commandHandler = (command) => {
         } else {
             return
         }
+    } else if (commandDet === 3 && nudeCommands.length > 2) {
+        if (command.channel.id === rentalChannel.id) {
+            vault(command, nudeCommands)
+        } else {
+            return
+        }
     }
 }
 
+const vault = (message, commandString) => {
+    const user = message.author.username
+    const inboundChannel = message.member.guild.channels.cache.find(i => i.name === 'services-inbound');
+    message.delete()
+    var reasonString = ""
+    for (i = 2; i != commandString.length; i++) {
+        reasonString += " " + commandString[i]
+    }
+    message.author.send("*Bzzzzt*\n\n\nWe have recieved your request! \n\nSomeone will be reaching out to you shortly <a:lumaChubeePat:964325660803858452>\n\n\n*Bzzzzt*")
+    inboundChannel.send({
+        content: "---------------------------------------------------------------\n" + user + " has requested " + commandString[1] + " from the vault with reason: " + reasonString + "\n\n\n Please react with a checkmark if you want to take the request"
+        });
+
+}
 
 const leveling = (message, commandString) => {
     const user = message.author.username

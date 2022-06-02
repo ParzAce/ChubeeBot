@@ -6,6 +6,7 @@ const fs = require('fs');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
 const generateImage = require('./generateImage.js');
 const commandHandler = require('./util/commands.js');
+const random = require('random')
 
 
 
@@ -248,7 +249,7 @@ client.on('messageCreate', (msg) => {
         var lumaCount = 0;
         var lumaOdds = [];
         for (i = 0; i < 16; i++) {
-            const odds = between(1, 1500);
+            const odds = random.int((min = 0), (max = 2000));
             if (odds === 5) {
                 lumaOdds[i] = '<a:lumaChubeePat:964325660803858452>';
                 hasLuma = 1;
