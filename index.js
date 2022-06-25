@@ -161,7 +161,7 @@ client.on('messageCreate', (msg) => {
             .setURL('https://www.youtube.com/channel/UCVpvUT4E0PLG4v5cgoGPG-A')
             .setDescription(msg.author.username + ' has increased their chubee faith level to ' + userStats.level + ' <a:pepesimp:881812231208181790> \n')
             .setThumbnail('https://i.imgur.com/mCnedBW.jpg')
-            .addField('Bee Bucks Gained', '' + buckGain);
+            .addField('Bee Bucks Gained', '<:BeeBuck:982008803308486656>' + buckGain + '<:BeeBuck:982008803308486656>');
             msg.channel.send({ embeds: [levelUpEmbed] });
             //levelUpEmbed.setDescription(msg.author.username + ' has increased their chubee faith level to ' + userStats.level + ' <a:pepesimp:881812231208181790> \n');
             if (userStats.level >= 1 && userStats.reached_level_1 === 0) {
@@ -228,7 +228,7 @@ client.on('messageCreate', (msg) => {
         //log every message xp up and level to xp
         console.log(msg.author.username + ' now has ' + userStats.xp);
         console.log(xpToNextLevel + ' XP needed for next level');
-        console.log(userBucks.Bee_Bucks + ' Bee bucks for user ' + msg.author.username);
+        console.log('<:BeeBuck:982008803308486656>' + userBucks.Bee_Bucks + '<:BeeBuck:982008803308486656>' + ' Bee bucks for user ' + msg.author.username);
     }
 
 
@@ -249,8 +249,11 @@ client.on('messageCreate', (msg) => {
         var lumaCount = 0;
         var lumaOdds = [];
         for (i = 0; i < 16; i++) {
-            const odds = random.int((min = 0), (max = 2000));
-            if (odds === 5) {
+            const odds = random.int((min = 1), (max = 30));
+            console.log(odds)
+            const odds2 = random.int((min = 1), (max = 30));
+            console.log(odds2)
+            if (odds === 5 && odds2 === 5) {
                 lumaOdds[i] = '<a:lumaChubeePat:964325660803858452>';
                 hasLuma = 1;
                 lumaCount++;
@@ -269,11 +272,11 @@ client.on('messageCreate', (msg) => {
         if (hasLuma === 1) {
             if (lumaCount === 1) {
                 msg.reply("Wow <a:ExcuseMe:922704264764207134>, You found a luma <a:lumaChubeePat:964325660803858452>! \n\n\n" 
-                + "Here's 100 Bee Bucks for your accomplishment");
+                + "Here's <:BeeBuck:982008803308486656>100<:BeeBuck:982008803308486656> Bee Bucks for your accomplishment");
                 userBucks.Bee_Bucks += 100;
             } else {
                 msg.reply("Wow <a:ExcuseMe:922704264764207134>, You found " + lumaCount + " luma <a:lumaChubeePat:964325660803858452>! \n\n\n" 
-                + "Here's " + (100 * lumaCount) + " Bee Bucks for your accomplishment");
+                + "Here's <:BeeBuck:982008803308486656>" + (100 * lumaCount) + "<:BeeBuck:982008803308486656> Bee Bucks for your accomplishment");
                 userBucks.Bee_Bucks += (100 * lumaCount);
             }
 
@@ -292,7 +295,7 @@ client.on('messageCreate', (msg) => {
             .addField('Current XP', '' + userStats.xp, true)
             .addField('XP needed for next level', '' + xpToNextLevel, true)
             .addField('\u200B', '\u200B')
-            .addField('Bee bucks', '' + userBucks.Bee_Bucks, true);
+            .addField('Bee bucks', '<:BeeBuck:982008803308486656>' + userBucks.Bee_Bucks + '<:BeeBuck:982008803308486656>', true);
         msg.reply({ embeds: [levelsEmbed] });
     }
     //chubee pat ends
