@@ -3,7 +3,7 @@ const { Client, Intents, messageCreate, guildMemberAdd, MessageEmbed } = require
 require("dotenv").config();
 const jsonfile = require('jsonfile');
 const fs = require('fs');
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_PRESENCES],  partials: ["MESSAGE", "CHANNEL", "REACTION", "GUILD_MEMBER", "USER"]});
 const generateImage = require('./generateImage.js');
 const commandHandler = require('./util/commands.js');
 const random = require('random')
@@ -55,12 +55,27 @@ function between(min, max) {
 
 //bot tasks when a guild member is updated
 client.on('guildMemberUpdate', (oldMember, newMember) => {
+    console.log("Here")
     //recruit messages when someone is given the recruit role
-    const oldMemberRecruitID = oldMember.roles.cache.some((r) => r.name === 'Recruit');
-    const newMemberRecruitID = newMember.roles.cache.some((r) => r.name === 'Recruit');
-    const genChannel = newMember.guild.channels.cache.find(i => i.name === 'general');
-    if (!oldMemberRecruitID && newMemberRecruitID) {
-        genChannel.send('WELCOME <@' + newMember.user.id + '> to the ~~cult~~ club as a recruit <a:pepesimp:881812231208181790>');
+    const oldMemberRecruitID = oldMember.roles.cache.some((r) => r.name === 'Recruit')
+    const newMemberRecruitID = newMember.roles.cache.some((r) => r.name === 'Recruit')
+    const oldMemberClubID = oldMember.roles.cache.some((r) => r.name === 'Club Member')
+    const newMemberClubID = newMember.roles.cache.some((r) => r.name === 'Club Member')
+    const genChannel = newMember.guild.channels.cache.find(i => i.name === 'general')
+    const clubChannel = newMember.guild.channels.cache.find(i => i.name === 'club-chat')
+    if (newMemberRecruitID) {
+        console.log(oldMemberRecruitID)
+        if (!oldMemberRecruitID) {
+            genChannel.send('WELCOME <@' + newMember.user.id + '> to the ~~cult~~ club as a recruit <a:pepesimp:881812231208181790>')
+        } else {
+            return
+        }
+    } else if (newMemberClubID) {
+        if (!oldMemberClubID) {
+            clubChannel.send('WELCOME <@' + newMember.user.id + '> as a new ~~cult~~ club member <a:pepesimp:881812231208181790>')
+        } else {
+            return
+        }
     }
 });
 
@@ -240,9 +255,6 @@ client.on('messageCreate', (msg) => {
         msg.reply('Our Queen\nWho art in Miyako\nHallowed be thy chubee\nThy Waspeen come\nThy will be done on Arissola as it is in Miyako\n Give us this day our daily pansun\n And forgive us our breedjects\nAs we forgive those who never become perfect\nAnd lead us not into saipats, but deliver us from evil');   
     } else if ((messageLower).includes('saipats') || (messageLower).includes('saipat')){
         msg.reply("Saipat will never amount to anything <a:PeppoHammer:922703155542782002> just like you if you keep typing that dreaded name in this server <:HappyGun:922702232682627103>");
-    } else if ((messageLower).includes('spats') || (messageLower).includes('spat')) {
-        msg.reply('Are you spitting on me?');
-        msg.react("<:pepehatescams:968943304886591518>")
     } else if ((messageLower).includes('pats')) {
 
         var hasLuma = 0;
@@ -306,13 +318,17 @@ client.on('messageCreate', (msg) => {
 
 //welcome message 
 client.on('guildMemberAdd', async (member) => {
-    const img = await generateImage(member);
+    console.log("Here")
+    const img = generateImage(member);
+    console.log("Here2")
     const welcomeMessage = '<@' + member.user.id + '>  welcome to my cul-, I mean club!';
+    console.log("Here2")
     const channel = member.guild.channels.cache.find(i => i.name === 'welcome');
     channel.send({
         content: welcomeMessage,
         files: [img]
         });
+    console.log("Here3")
 }); //end welcome message
 
 
