@@ -1,11 +1,11 @@
 const Discord = require('discord.js');
-const { Client, Intents, messageCreate, guildMemberAdd, MessageEmbed } = require('discord.js');
+const { Client, Intents, partials, messageCreate, guildMemberUpdate, guildMemberAdd } = require('discord.js');
 require("dotenv").config();
 const jsonfile = require('jsonfile');
 const fs = require('fs');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_PRESENCES],  partials: ["MESSAGE", "CHANNEL", "REACTION", "GUILD_MEMBER", "USER"]});
-const generateImage = require('./generateImage.js');
-const commandHandler = require('./util/commands.js');
+const commandHandler = require('./util/services.js');
+const dojoTimes = require('./util/dojotimes.js');
 const random = require('random')
 
 
@@ -17,23 +17,6 @@ let bot = {
     prefix: '^',
     owners: ['173216366847852544']
 }
-
-client.commands = new Discord.Collection();
-client.events = new Discord.Collection();
-
-client.loadEvents = (bot, reload) => require('./handlers/events')(bot, reload);
-
-client.loadEvents(bot, false);
-
-module.exports = bot;
-
-
-
-
-
-
-
-
 
 //pull stats from json file
 var stats = {};
@@ -261,9 +244,9 @@ client.on('messageCreate', (msg) => {
         var lumaCount = 0;
         var lumaOdds = [];
         for (i = 0; i < 16; i++) {
-            const odds = random.int((min = 1), (max = 30));
+            const odds = random.int((min = 1), (max = 16));
             console.log(odds)
-            const odds2 = random.int((min = 1), (max = 30));
+            const odds2 = random.int((min = 1), (max = 16));
             console.log(odds2)
             if (odds === 5 && odds2 === 5) {
                 lumaOdds[i] = '<a:lumaChubeePat:964325660803858452>';
@@ -316,21 +299,45 @@ client.on('messageCreate', (msg) => {
 
   });//end message events
 
-//welcome message 
-client.on('guildMemberAdd', async (member) => {
-    console.log("Here")
-    const img = generateImage(member);
-    console.log("Here2")
-    const welcomeMessage = '<@' + member.user.id + '>  welcome to my cul-, I mean club!';
-    console.log("Here2")
-    const channel = member.guild.channels.cache.find(i => i.name === 'welcome');
-    channel.send({
-        content: welcomeMessage,
-        files: [img]
-        });
-    console.log("Here3")
-}); //end welcome message
 
+client.on('interactionCreate', async (interaction) => {
+    if (!interaction.isCommand()) {
+        return
+    }
+
+
+    const { commandName, options } = interaction
+
+    if (commandName === 'dojotimes') {
+        const dojotimesEmbed = dojoTimes()
+        const messageId = await interaction.reply({ embeds: [ dojotimesEmbed ] });
+    }
+})
+
+
+
+client.on('ready', () => {
+    console.log('Chubee is online!');
+    bot.client.user.setActivity('your prayers', { type: 'LISTENING' });
+
+    const guildTestID = '934725647266357288'
+    const guildID = '834466510322794496'
+    const guild = client.guilds.cache.get(guildID)
+    let commands
+
+    if (guild) {
+        commands = guild.commands
+    } else {
+        commands = client.application?.commands
+    }
+
+
+    commands?.create({
+        name: 'dojotimes',
+        description: 'Display the dojo war times for each dojo',
+    })
+
+})
 
 
 
