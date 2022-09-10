@@ -47,12 +47,12 @@ const dojoTimes = () => {
     }
 
 
-    var denizDT = year + "-" + month + "-" + denizDay + " " + 3 + ":" + "00" + ":" + "00";
-    var omniDT = year + "-" + month + "-" + omniDay + " " + 7 + ":" + "00" + ":" + "00";
-    var tucmaDT = year + "-" + month + "-" + tucmaDay + " " + 11 + ":" + "00" + ":" + "00";
-    var kisiwaDT = year + "-" + month + "-" + kisiwaDay + " " + 15 + ":" + "00" + ":" + "00";
-    var cipankuDT = year + "-" + month + "-" + cipankuDay + " " + 19 + ":" + "00" + ":" + "00";
-    var arburyDT = year + "-" + month + "-" + arburyDay + " " + 23 + ":" + "00" + ":" + "00";
+    var denizDT = year + "-" + month + "-" + denizDay + " " + 8 + ":" + "00" + ":" + "00";
+    var omniDT = year + "-" + month + "-" + omniDay + " " + 12 + ":" + "00" + ":" + "00";
+    var tucmaDT = year + "-" + month + "-" + tucmaDay + " " + 16 + ":" + "00" + ":" + "00";
+    var kisiwaDT = year + "-" + month + "-" + kisiwaDay + " " + 20 + ":" + "00" + ":" + "00";
+    var cipankuDT = year + "-" + month + "-" + cipankuDay + " " + 24 + ":" + "00" + ":" + "00";
+    var arburyDT = year + "-" + month + "-" + arburyDay + " " + 4 + ":" + "00" + ":" + "00";
 
 
     //get unix for each island
