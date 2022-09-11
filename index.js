@@ -4,12 +4,10 @@ require("dotenv").config();
 const jsonfile = require('jsonfile');
 const fs = require('fs');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_PRESENCES],  partials: ["MESSAGE", "CHANNEL", "REACTION", "GUILD_MEMBER", "USER"]});
-const commandHandler = require('./util/services.js');
-const dojoTimes = require('./util/dojotimes.js');
+const commandHandler = require('./util/services.js')
+const dojoTimes = require('./util/dojotimes.js')
+const gamble = require('./util/gamble.js')
 const random = require('random')
-
-
-
 
 //command handler
 let bot = {
@@ -88,17 +86,17 @@ client.on('messageCreate', (msg) => {
 
 
     //get role IDs to set roles for the level system
-    const chubee_follower = msg.guild.roles.cache.find((r) => r.name === 'Chubee Follower');
-    const chubee_disciple = msg.guild.roles.cache.find((r) => r.name === 'Chubee Disciple');
-    const chubee_priest = msg.guild.roles.cache.find((r) => r.name === 'Chubee Priest');
-    const chubee_lector = msg.guild.roles.cache.find((r) => r.name === 'Chubee Lector');
-    const chubee_warrior_priest = msg.guild.roles.cache.find((r) => r.name === 'Chubee Warrior Priest');
-    const chubee_holy_vocation = msg.guild.roles.cache.find((r) => r.name === 'Chubee Holy Vocation');
-    const chubee_arch_lector = msg.guild.roles.cache.find((r) => r.name === 'Chubee Arch Lector');
-    const chubee_high_priest = msg.guild.roles.cache.find((r) => r.name === 'Chubee High Priest');
+    const chubee_follower = msg.guild.roles.cache.find((r) => r.name === 'Chubee Follower')
+    const chubee_disciple = msg.guild.roles.cache.find((r) => r.name === 'Chubee Disciple')
+    const chubee_priest = msg.guild.roles.cache.find((r) => r.name === 'Chubee Priest')
+    const chubee_lector = msg.guild.roles.cache.find((r) => r.name === 'Chubee Lector')
+    const chubee_warrior_priest = msg.guild.roles.cache.find((r) => r.name === 'Chubee Warrior Priest')
+    const chubee_holy_vocation = msg.guild.roles.cache.find((r) => r.name === 'Chubee Holy Vocation')
+    const chubee_arch_lector = msg.guild.roles.cache.find((r) => r.name === 'Chubee Arch Lector')
+    const chubee_high_priest = msg.guild.roles.cache.find((r) => r.name === 'Chubee High Priest')
 
     const message = msg.content;
-    const messageLower = message.toLowerCase();
+    const messageLower = message.toLowerCase()
     //add user to guild
     if (msg.guild.id in stats === false) {
         stats[msg.guild.id] = {};
@@ -107,18 +105,18 @@ client.on('messageCreate', (msg) => {
     beeBucks[msg.guild.id] = {};
     }
     //set base bee bucks for user
-    const guildbucks = beeBucks[msg.guild.id];
+    const guildbucks = beeBucks[msg.guild.id]
     if (msg.author.id in guildbucks === false) {
         guildbucks[msg.author.id] = {
             Bee_Bucks: 0,
             last_message: 0
         };
 
-        jsonfile.writeFileSync('beeBucks.json', beeBucks);
+        jsonfile.writeFileSync('beeBucks.json', beeBucks)
     }
 
     //set base stats for user
-    const guildStats = stats[msg.guild.id];
+    const guildStats = stats[msg.guild.id]
     if (msg.author.id in guildStats === false) {
         guildStats[msg.author.id] = {
             xp: 0,
@@ -135,25 +133,25 @@ client.on('messageCreate', (msg) => {
         };
     }
     //add xp for messages and set last message and for bee bucks
-    const userStats = guildStats[msg.author.id];
-    const userBucks = guildbucks[msg.author.id];
+    const userStats = guildStats[msg.author.id]
+    const userBucks = guildbucks[msg.author.id]
     const xpToNextLevel = 5 * Math.pow(userStats.level, 2) + 50 * userStats.level + 100;
     if (Date.now() - userBucks.last_message > 43200000) {
         userBucks.last_message = Date.now()
-        userBucks.Bee_Bucks += 10;
-        jsonfile.writeFileSync('beeBucks.json', beeBucks);
+        userBucks.Bee_Bucks += 100
+        jsonfile.writeFileSync('beeBucks.json', beeBucks)
     }
     if (Date.now() - userStats.last_message > 60000) {
-        userStats.xp += between(15, 25);
+        userStats.xp += between(15, 25)
         //userStats.xp += 1000;
-        userStats.last_message = Date.now();
+        userStats.last_message = Date.now()
         //setup what xp needs for levels and reseting/setting levels and xp and adding roles for certain levels
         if (userStats.xp >= xpToNextLevel) {
             userStats.level++;
-            userStats.xp = userStats.xp - xpToNextLevel;
-            buckGain = userStats.level * 25;
-            userBucks.Bee_Bucks += buckGain;
-            jsonfile.writeFileSync('beeBucks.json', beeBucks);
+            userStats.xp = userStats.xp - xpToNextLevel
+            buckGain = userStats.level * 25
+            userBucks.Bee_Bucks += buckGain
+            jsonfile.writeFileSync('beeBucks.json', beeBucks)
             const levelUpEmbed = new Discord.MessageEmbed()
             .setColor('#304281').setTitle('Level Up!')
             .setURL('https://www.youtube.com/channel/UCVpvUT4E0PLG4v5cgoGPG-A')
@@ -244,38 +242,38 @@ client.on('messageCreate', (msg) => {
         var lumaCount = 0;
         var lumaOdds = [];
         for (i = 0; i < 16; i++) {
-            const odds = random.int((min = 1), (max = 16));
+            const odds = random.int((min = 1), (max = 16))
             console.log(odds)
-            const odds2 = random.int((min = 1), (max = 16));
+            const odds2 = random.int((min = 1), (max = 16))
             console.log(odds2)
             if (odds === 5 && odds2 === 5) {
-                lumaOdds[i] = '<a:lumaChubeePat:964325660803858452>';
+                lumaOdds[i] = '<a:lumaChubeePat:964325660803858452>'
                 hasLuma = 1;
                 lumaCount++;
             } else {
-                lumaOdds[i] = '<a:chubee_pat:881808870681481216>';
+                lumaOdds[i] = '<a:chubee_pat:881808870681481216>'
             }
         }
 
 
-        msg.reply('Did someone say pats <:kekw:950132782737268807> \n'+ 
+        msg.reply('Did someone say pats? \n'+ 
         lumaOdds[0] + lumaOdds[1] + lumaOdds[2] + lumaOdds[3] + 
         '\n' + lumaOdds[12] + lumaOdds[13] + lumaOdds[14] + lumaOdds[15] + 
         '\n' + lumaOdds[4] + lumaOdds[5] + lumaOdds[6] + lumaOdds[7] + 
-        '\n' + lumaOdds[8] + lumaOdds[9] + lumaOdds[10] + lumaOdds[11]);
+        '\n' + lumaOdds[8] + lumaOdds[9] + lumaOdds[10] + lumaOdds[11])
 
         if (hasLuma === 1) {
             if (lumaCount === 1) {
                 msg.reply("Wow <a:ExcuseMe:922704264764207134>, You found a luma <a:lumaChubeePat:964325660803858452>! \n\n\n" 
-                + "Here's <:BeeBuck:982008803308486656>100<:BeeBuck:982008803308486656> Bee Bucks for your accomplishment");
-                userBucks.Bee_Bucks += 100;
+                + "Here's <:BeeBuck:982008803308486656>100<:BeeBuck:982008803308486656> Bee Bucks for your accomplishment")
+                userBucks.Bee_Bucks += 1000
             } else {
                 msg.reply("Wow <a:ExcuseMe:922704264764207134>, You found " + lumaCount + " luma <a:lumaChubeePat:964325660803858452>! \n\n\n" 
-                + "Here's <:BeeBuck:982008803308486656>" + (100 * lumaCount) + "<:BeeBuck:982008803308486656> Bee Bucks for your accomplishment");
-                userBucks.Bee_Bucks += (100 * lumaCount);
+                + "Here's <:BeeBuck:982008803308486656>" + (100 * lumaCount) + "<:BeeBuck:982008803308486656> Bee Bucks for your accomplishment")
+                userBucks.Bee_Bucks += (1000 * lumaCount)
             }
 
-            jsonfile.writeFileSync('beeBucks.json', beeBucks);
+            jsonfile.writeFileSync('beeBucks.json', beeBucks)
 
         }
 
@@ -290,12 +288,12 @@ client.on('messageCreate', (msg) => {
             .addField('Current XP', '' + userStats.xp, true)
             .addField('XP needed for next level', '' + xpToNextLevel, true)
             .addField('\u200B', '\u200B')
-            .addField('Bee bucks', '<:BeeBuck:982008803308486656>' + userBucks.Bee_Bucks + '<:BeeBuck:982008803308486656>', true);
-        msg.reply({ embeds: [levelsEmbed] });
+            .addField('Bee bucks', '<:BeeBuck:982008803308486656>' + userBucks.Bee_Bucks + '<:BeeBuck:982008803308486656>', true)
+        msg.reply({ embeds: [levelsEmbed] })
     }
     //chubee pat ends
 
-    console.log(userBucks.Bee_Bucks);
+    console.log(userBucks.Bee_Bucks)
 
   });//end message events
 
@@ -308,9 +306,41 @@ client.on('interactionCreate', async (interaction) => {
 
     const { commandName, options } = interaction
 
+    //dojotimes command
     if (commandName === 'dojotimes') {
         const dojotimesEmbed = dojoTimes()
-        const messageId = await interaction.reply({ embeds: [ dojotimesEmbed ] });
+        const messageId = await interaction.reply({ embeds: [ dojotimesEmbed ] })
+
+        //gamble command
+    } else if (commandName === 'gamble') {
+
+        const guildbucks = beeBucks[interaction.guild.id]
+        const userBucks = guildbucks[interaction.user.id]
+        const gambleNumber = options.getInteger('gambleamount')
+
+        if (gambleNumber === 0 || gambleNumber === null || gambleNumber > userBucks.Bee_Bucks) {
+            interaction.reply({
+                content: 'Please enter a valid number, you have ' + userBucks.Bee_Bucks + ' Bee bucks.',
+                ephemeral: true,
+            })
+        } else {
+            const winner = gamble()
+            if (winner == 0) {
+                userBucks.Bee_Bucks= userBucks.Bee_Bucks - gambleNumber
+                jsonfile.writeFileSync('beeBucks.json', beeBucks)
+                interaction.reply({
+                    content: '*Bzzzzt* unfortunately, I have decided to take your Bee bucks <a:badcat:968943095657943041> you have ' + userBucks.Bee_Bucks + ' Bee bucks left *Bzzzzt*',
+                    ephemeral: true,
+                })
+            } else {
+                userBucks.Bee_Bucks += gambleNumber
+                jsonfile.writeFileSync('beeBucks.json', beeBucks)
+                interaction.reply({
+                    content: '*Bzzzzt* It seems you are worthy <:LumaChubee:921287077017055253> you have ' + userBucks.Bee_Bucks + ' Bee bucks now *Bzzzzt*',
+                    ephemeral: true,
+                })
+            }
+        }
     }
 })
 
@@ -335,6 +365,19 @@ client.on('ready', () => {
     commands?.create({
         name: 'dojotimes',
         description: 'Display the dojo war times for each dojo',
+    })
+
+    commands?.create({
+        name: 'gamble',
+        description: 'Gamble your bee bucks away',
+        options: [ 
+            {
+                name: 'gambleamount',
+                description: 'How many bee bucks to gamble',
+                required: true,
+                type: Discord.Constants.ApplicationCommandOptionTypes.INTEGER,
+            }
+        ]
     })
 
 })
