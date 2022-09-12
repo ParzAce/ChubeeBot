@@ -329,15 +329,15 @@ client.on('interactionCreate', async (interaction) => {
                 userBucks.Bee_Bucks= userBucks.Bee_Bucks - gambleNumber
                 jsonfile.writeFileSync('beeBucks.json', beeBucks)
                 interaction.reply({
-                    content: '*Bzzzzt* unfortunately, I have decided to take your Bee bucks <a:badcat:968943095657943041> you have ' + userBucks.Bee_Bucks + ' Bee bucks left *Bzzzzt*',
-                    ephemeral: true,
+                    content: '*Bzzzzt* unfortunately, I have decided to take your Bee bucks <a:badcat:968943095657943041> you gambled ' + gambleNumber + ' bee bucks away and have ' + userBucks.Bee_Bucks + ' Bee bucks left *Bzzzzt*',
+                    ephemeral: false,
                 })
             } else {
                 userBucks.Bee_Bucks += gambleNumber
                 jsonfile.writeFileSync('beeBucks.json', beeBucks)
                 interaction.reply({
                     content: '*Bzzzzt* It seems you are worthy <:LumaChubee:921287077017055253> you have ' + userBucks.Bee_Bucks + ' Bee bucks now *Bzzzzt*',
-                    ephemeral: true,
+                    ephemeral: false,
                 })
             }
         }
