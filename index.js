@@ -265,11 +265,11 @@ client.on('messageCreate', (msg) => {
         if (hasLuma === 1) {
             if (lumaCount === 1) {
                 msg.reply("Wow <a:ExcuseMe:922704264764207134>, You found a luma <a:lumaChubeePat:964325660803858452>! \n\n\n" 
-                + "Here's <:BeeBuck:982008803308486656>100<:BeeBuck:982008803308486656> Bee Bucks for your accomplishment")
+                + "Here's <:BeeBuck:982008803308486656>1000<:BeeBuck:982008803308486656> Bee Bucks for your accomplishment")
                 userBucks.Bee_Bucks += 1000
             } else {
                 msg.reply("Wow <a:ExcuseMe:922704264764207134>, You found " + lumaCount + " luma <a:lumaChubeePat:964325660803858452>! \n\n\n" 
-                + "Here's <:BeeBuck:982008803308486656>" + (100 * lumaCount) + "<:BeeBuck:982008803308486656> Bee Bucks for your accomplishment")
+                + "Here's <:BeeBuck:982008803308486656>" + (1000 * lumaCount) + "<:BeeBuck:982008803308486656> Bee Bucks for your accomplishment")
                 userBucks.Bee_Bucks += (1000 * lumaCount)
             }
 
