@@ -1,6 +1,6 @@
-const Discord = require("discord.js");
-const jsonfile = require('jsonfile');
-const fs = require('fs');
+const Discord = require("discord.js")
+const jsonfile = require('jsonfile')
+const fs = require('fs')
 const random = require('random')
 
 
@@ -15,4 +15,4 @@ const gamble = () => {
     }
 }
 
-module.exports = gamble;
+module.exports = gamble

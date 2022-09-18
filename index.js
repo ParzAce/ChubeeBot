@@ -7,6 +7,8 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 const commandHandler = require('./util/services.js')
 const dojoTimes = require('./util/dojotimes.js')
 const gamble = require('./util/gamble.js')
+const temtem = require('./util/temtem.js')
+const temtemNumberGen = require('./util/temtemNumberGen.js')
 const random = require('random')
 
 //command handler
@@ -320,7 +322,7 @@ client.on('interactionCreate', async (interaction) => {
 
         if (gambleNumber === 0 || gambleNumber === null || gambleNumber > userBucks.Bee_Bucks) {
             interaction.reply({
-                content: 'Please enter a valid number, you have ' + userBucks.Bee_Bucks + ' Bee bucks.',
+                content: '*Bzzzzt* Please enter a valid number, you have ' + userBucks.Bee_Bucks + ' bee bucks *Bzzzzt*',
                 ephemeral: true,
             })
         } else {
@@ -336,10 +338,23 @@ client.on('interactionCreate', async (interaction) => {
                 userBucks.Bee_Bucks += gambleNumber
                 jsonfile.writeFileSync('beeBucks.json', beeBucks)
                 interaction.reply({
-                    content: '*Bzzzzt* It seems you are worthy <:LumaChubee:921287077017055253> you have ' + userBucks.Bee_Bucks + ' Bee bucks now *Bzzzzt*',
+                    content: '*Bzzzzt* It seems you are worthy <:LumaChubee:921287077017055253> you gambled ' + gambleNumber + ' bee bucks and you now have ' + userBucks.Bee_Bucks + ' Bee bucks now *Bzzzzt*',
                     ephemeral: false,
                 })
             }
+        }
+    } else if (commandName === 'temtem') {
+        const temtemName = options.getString('temtemname')
+        const temtemNumber = await temtemNumberGen(temtemName)
+        if (temtemNumber === 0) {
+            interaction.reply({
+                content: '*Bzzzzt* This is not a temtem *Bzzzzt*',
+                ephemeral: true,
+            })
+        } else {
+            const temtemEmbed = await temtem(temtemNumber)
+            //console.log(temtemEmbed)
+            const messageId = await interaction.reply({ embeds: [ temtemEmbed ] })
         }
     }
 })
@@ -348,9 +363,10 @@ client.on('interactionCreate', async (interaction) => {
 
 client.on('ready', () => {
     console.log('Chubee is online!');
-    bot.client.user.setActivity('your prayers', { type: 'LISTENING' });
-
+    bot.client.user.setActivity('your prayers', { type: 'LISTENING' })
+    //test bot id
     const guildTestID = '934725647266357288'
+    //real bot id
     const guildID = '834466510322794496'
     const guild = client.guilds.cache.get(guildID)
     let commands
@@ -365,6 +381,19 @@ client.on('ready', () => {
     commands?.create({
         name: 'dojotimes',
         description: 'Display the dojo war times for each dojo',
+    })
+
+    commands?.create({
+        name: 'temtem',
+        description: 'Grab information on a specific temtem',
+        options: [
+            {
+                name: 'temtemname',
+                description: 'the name of the temtem',
+                required: true,
+                type: Discord.Constants.ApplicationCommandOptionTypes.STRING,
+            }
+        ]
     })
 
     commands?.create({

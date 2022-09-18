@@ -1,15 +1,15 @@
 
-const Discord = require("discord.js");
+const Discord = require("discord.js")
 
 const commandArrays = [ "rental", "leveling"]
-const commandCounter = 2;
+const commandCounter = 2
 
 const commandHandler = (command) => {
     var commandBool = false
     var commandDet = 0
     const nudeCommand = command.content.substring(1)
     const nudeCommands = nudeCommand.split(" ")
-    const rentalChannel = command.member.guild.channels.cache.find(i => i.name === 'club-services');
+    const rentalChannel = command.member.guild.channels.cache.find(i => i.name === 'club-services')
     for (i = 0; i < commandCounter; i++) {
         if (nudeCommands[0] === commandArrays[i]) {
             commandDet = i
