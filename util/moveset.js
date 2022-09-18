@@ -17,13 +17,13 @@ const moveset = async (temtemName) => {
     let movesetString = ""
 
     temtem.techniques.forEach((move) => {
-        movesetString += move.name + '            Learned by ' + move.source
+        movesetString += '**' + move.name + '**            Learned by ' + move.source
         if (move.source === 'Breeding') {
-            movesetString += ' <:breedingegg:1020898475174531144>\n\n'
+            movesetString += ' <:breedingegg:1020898475174531144>\n'
         } else if (move.source === 'TechniqueCourses') {
-            movesetString += ' <:alert:1020898472905425007>\n\n'
+            movesetString += ' <:alert:1020898472905425007>\n'
         } else {
-            movesetString += ' at level ' + move.levels +' <:updoot:1020898473614245979>\n\n'
+            movesetString += ' at level ' + move.levels +' <:updoot:1020898473614245979>\n'
         }
     })
 
