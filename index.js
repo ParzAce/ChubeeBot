@@ -9,6 +9,7 @@ const dojoTimes = require('./util/dojotimes.js')
 const gamble = require('./util/gamble.js')
 const temtem = require('./util/temtem.js')
 const temtemNumberGen = require('./util/temtemNumberGen.js')
+const moveset = require('./util/moveset.js')
 const random = require('random')
 
 //command handler
@@ -356,6 +357,19 @@ client.on('interactionCreate', async (interaction) => {
             //console.log(temtemEmbed)
             const messageId = await interaction.reply({ embeds: [ temtemEmbed ] })
         }
+    } else if (commandName === 'moveset') {
+        const temtemName = options.getString('temtemname')
+        const temtemNumber = await temtemNumberGen(temtemName)
+        if (temtemNumber === 0) {
+            interaction.reply({
+                content: '*Bzzzzt* This is not a temtem *Bzzzzt*',
+                ephemeral: true,
+            })
+        } else {
+            const temtemEmbed = await moveset(temtemNumber)
+            //console.log(temtemEmbed)
+            const messageId = await interaction.reply({ embeds: [ temtemEmbed ] })
+        }
     }
 })
 
@@ -384,8 +398,21 @@ client.on('ready', () => {
     })
 
     commands?.create({
+        name: 'moveset',
+        description: 'Get a temtems moveset',
+        options: [
+            {
+                name: 'temtemname',
+                description: 'the name of the temtem',
+                required: true,
+                type: Discord.Constants.ApplicationCommandOptionTypes.STRING,
+            }
+        ]
+    })
+
+    commands?.create({
         name: 'temtem',
-        description: 'Grab information on a specific temtem',
+        description: 'Grab general information on a specific temtem',
         options: [
             {
                 name: 'temtemname',
@@ -414,4 +441,4 @@ client.on('ready', () => {
 
 
 //must be at the end
-client.login(process.env.TOKEN);
+client.login(process.env.TOKEN)

@@ -286,6 +286,8 @@ const temtem = async (temtemName) => {
         description = temtem.description.slice(0, 2000) + "..."
      }
 
+     let genderRatio = 'Male: ' + temtem.genderRatio.male + '% <:8757male:1020905341157900318>\n' + 'Female: ' + temtem.genderRatio.female + '% <:7085female:1020905340251930644>'
+
     let wikiUrl = temtem.wikiUrl.substring(0, 14) + '.wiki.gg/' + temtem.wikiUrl.substring(29)
      if (id < 10) id = `00${id}`
      else if (id < 100) id = `0${id}`
@@ -300,6 +302,9 @@ const temtem = async (temtemName) => {
          //.addField("temtem-resistant-against", resistances)
          //.addField("temtem-weak-against", weaknesses)
          .addField("Traits", traits, true)
+         .addField("Gender Ratio", genderRatio, true)
+         .addField("Hatch Time", `${temtem.hatchMins} minutes`, true)
+         .addField("Catch Rate", `${temtem.catchRate}`, true)
          .addField(`\u200b`, "\u200b")
          .addField("Health " + emotes.health, `${temtem.stats.hp}`, true)
          .addField("Stamina " +emotes.stamina, `${temtem.stats.sta}`, true)
