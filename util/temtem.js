@@ -266,10 +266,28 @@ const temtem = async (temtemName) => {
     // weaknesses strings
     let weaknesses = ""
     let resistances = ""
-    for (type in weak) {
+    const elementsSorted = []
+        for (let element in weak) {
+            elementsSorted.push({ name: element, amount: weak[element] })
+        }
 
-    }
+        console.log(elementsSorted)
+        elementsSorted.sort(function (a, b) {
+            return b.amount - a.amount;
+        })
+        console.log(elementsSorted)
 
+        for (element in elementsSorted) {
+            element = elementsSorted[element]
+            if (element.amount > 0) {
+                weaknesses += `${emotes[element.name]} ${element.amount === 2 ? '**' : ''}${element.name.charAt(0).toUpperCase()}${element.name.slice(1).toLowerCase()} (${Math.pow(2, element.amount)}x)${element.amount === 2 ? '**' : ''},\n`
+            } else if (element.amount < 0) {
+                resistances += `${emotes[element.name]} ${element.amount === -2 ? '**' : ''}${element.name.charAt(0).toUpperCase()}${element.name.slice(1).toLowerCase()} (${Math.pow(2, element.amount)}x)${element.amount === -2 ? '**' : ''},\n`
+            }
+        }
+
+        console.log(weaknesses)
+        console.log(resistances)
 
      //getting the traits
      let traits = ""
@@ -298,12 +316,13 @@ const temtem = async (temtemName) => {
          .setColor(color)
          .setDescription(description)
          //.addField("temtem-tv-yield", temtem.tvYields)
-         .addField("Type(s)", types)
+         .addField("Type(s)", types, true)
+         .addField("Resistances", resistances, true)
+         .addField("Weaknesses", weaknesses, true)
          //.addField("temtem-resistant-against", resistances)
          //.addField("temtem-weak-against", weaknesses)
          .addField("Traits", traits, true)
          .addField("Gender Ratio", genderRatio, true)
-         .addField("Hatch Time", `${temtem.hatchMins} minutes`, true)
          .addField("Catch Rate", `${temtem.catchRate}`, true)
          .addField(`\u200b`, "\u200b")
          .addField("Health " + emotes.health, `${temtem.stats.hp}`, true)
