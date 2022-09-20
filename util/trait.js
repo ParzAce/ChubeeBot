@@ -3,20 +3,19 @@ const fetch = require("node-fetch")
 
 
 
-const traitDescriptions = async (traits) => {
+const traitDescription = async (trait) => {
     const api_url = 'https://temtem-api.mael.tech/api/traits'
     let result = await fetch(url)
     try { result = await result.json(); } catch (err) { result = null }
-    let traitDes = []
+    let traitDes = 0
 
-    for (trait in traits) {
-        for (items in result) {
-            if (trait === items.name) {
-                traitDes.append(items.effect)
-            }
+    for (item in result) {
+        if (trait.toLowerCase === item.name.toLowerCase()) {
+            traitDes = item.effect
         }
     }
+
     return traitDes
 }
 
-module.exports = traitDescriptions
+module.exports = traitDescription

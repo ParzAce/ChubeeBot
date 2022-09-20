@@ -271,12 +271,12 @@ const temtem = async (temtemName) => {
             elementsSorted.push({ name: element, amount: weak[element] })
         }
 
-        console.log(elementsSorted)
+
         elementsSorted.sort(function (a, b) {
             return b.amount - a.amount;
         })
-        console.log(elementsSorted)
 
+        //calc weaknesses
         for (element in elementsSorted) {
             element = elementsSorted[element]
             if (element.amount > 0) {
@@ -306,7 +306,7 @@ const temtem = async (temtemName) => {
 
      let genderRatio = 'Male: ' + temtem.genderRatio.male + '% <:8757male:1020905341157900318>\n' + 'Female: ' + temtem.genderRatio.female + '% <:7085female:1020905340251930644>'
 
-    let wikiUrl = temtem.wikiUrl.substring(0, 14) + '.wiki.gg/' + temtem.wikiUrl.substring(29)
+    let wikiUrl = temtem.wikiUrl
      if (id < 10) id = `00${id}`
      else if (id < 100) id = `0${id}`
      const embed = new Discord.MessageEmbed()
