@@ -10,6 +10,7 @@ const gamble = require('./util/gamble.js')
 const temtem = require('./util/temtem.js')
 const temtemNumberGen = require('./util/temtemNumberGen.js')
 const moveset = require('./util/moveset.js')
+const traitDescription = require('./util/trait.js')
 const random = require('random')
 
 //command handler
@@ -370,6 +371,19 @@ client.on('interactionCreate', async (interaction) => {
             //console.log(temtemEmbed)
             const messageId = await interaction.reply({ embeds: [ temtemEmbed ] })
         }
+    } else if (commandName === 'trait') {
+        let traitName = options.getString('traitname')
+        const traitEmbed = await traitDescription(traitName)
+        if (traitEmbed === 0) {
+            interaction.reply({
+                content: '*Bzzzzt* This is not a trait *Bzzzzt*',
+                ephemeral: true,
+            })
+        } else {
+            const messageId = await interaction.reply({ embeds: [ traitEmbed ] })
+
+        }
+        
     }
 })
 
@@ -404,6 +418,20 @@ client.on('ready', () => {
             {
                 name: 'temtemname',
                 description: 'the name of the temtem',
+                required: true,
+                type: Discord.Constants.ApplicationCommandOptionTypes.STRING,
+            }
+        ]
+    })
+
+
+    commands?.create({
+        name: 'trait',
+        description: 'Grab the description of a trait',
+        options: [
+            {
+                name: 'traitname',
+                description: 'the name of the trait',
                 required: true,
                 type: Discord.Constants.ApplicationCommandOptionTypes.STRING,
             }
