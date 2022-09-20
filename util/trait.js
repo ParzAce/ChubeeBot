@@ -8,6 +8,9 @@ const traitDescription = async (trait) => {
     let result = await fetch(api_url)
     try { result = await result.json(); } catch (err) { result = null }
     var traitDes = false
+    if (trait.toLowerCase() === 'traits') {
+        return 0
+    }
 
 
     result.forEach((item) => {
