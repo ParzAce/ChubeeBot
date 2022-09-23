@@ -286,8 +286,9 @@ const temtem = async (temtemName) => {
             }
         }
 
-        console.log(weaknesses)
-        console.log(resistances)
+        if (resistances === "") {
+            resistances = "None"
+        }
 
      //getting the traits
      let traits = ""

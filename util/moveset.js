@@ -28,7 +28,7 @@ const moveset = async (temtemName) => {
     })
 
 
-    let wikiUrl = temtem.wikiUrl.substring(0, 14) + '.wiki.gg/' + temtem.wikiUrl.substring(29)
+    let wikiUrl = temtem.wikiUrl
     let id = temtem.number
     const embed = new Discord.MessageEmbed()
          .setTitle(temtem.name + ' (ID:' + id + ')')
